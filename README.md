@@ -1,4 +1,4 @@
-### [Chat Web Application in PHP][link] - [nvanha][website] 👋
+### [Chat Web Application in PHP][link] - [nvan.ha][website] 👋
 
 ## Introduce
 - The Sample PHP Chat App demonstrates the use of APIs for EnableX platform to carry out 1-to-1 RTC (Real Time Communication) Application.
