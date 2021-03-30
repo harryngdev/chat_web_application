@@ -1,0 +1,603 @@
+$bg-sidepanel: #2f3136;
+$bg-content: #36393f;
+$bg-profile: #292b2f;
+$bg-search: #202225;
+$bg-active: #393c43;
+$bg-chat: #40444b;
+$green: #43b581;
+$button: #b9bbbe;
+$text-silver: #8e9297;
+$content-hover: #32353b;
+$bg-contact-hover: #34373c;
+
+@mixin flex($align: flex-start, $justify: flex-start, $wrap: nowrap) {
+    display: flex;
+    align-items: $align;
+    justify-content: $justify;
+    flex-wrap: $wrap;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    -webkit-box-sizing:  border-box;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+}
+
+#wrapper {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    background-color: $bg-search;
+    @include flex();
+    &:before {
+        content: "NVAN.HA";
+        position: absolute;
+        color: $text-silver;
+        font-family: "Poppins", sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        z-index: 100;
+        top: 0.5rem;
+        left: 0.9rem;
+        
+    }
+    &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 23px;
+        background-color: $bg-search;
+        z-index: 50;
+        top: 0;
+        left: 0;
+    }
+}
+
+#author-intro {
+    width: 74px;
+    height: 100%;
+    background-color: $bg-search;
+    padding-top: 14px;
+    .logo {
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        &:after {
+            content: "";
+            position: absolute;
+            width: 3px;
+            height: 55%;
+            top: 50%;
+            left: 0;
+            background-color: #fff;
+            z-index: 2;
+            transform: translateY(-50%);
+            border-radius: 0 3rem 3rem 0;
+        }
+        &:before {
+            content: "";
+            position: absolute;
+            width: 40%;
+            height: 0.7px;
+            bottom: 0.5rem;
+            left: 50%;
+            background-color: $bg-content;
+            z-index: 2;
+            transform: translateX(-50%);
+            border-radius: 0 3rem 3rem 0;
+        }
+    }
+}
+
+#container {
+    width: 100%;
+    height: 100vh;
+    border-radius: 1rem 0 0 0;
+    overflow: hidden;
+    @include flex();
+}
+
+.online {
+    border-radius: 100%;
+    padding: 0.2rem;
+    position: relative;
+    img {
+        border-radius: 100%;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: -3px;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: $green;
+        border-radius: 100%;
+        border: 3.5px solid $bg-sidepanel;
+    }
+}
+
+.offline {
+    border-radius: 100%;
+    padding: 0.2rem;
+    position: relative;
+    display: block;
+    img {
+        border-radius: 100%;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: -3px;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: $button;
+        border-radius: 100%;
+        border: 3.5px solid $bg-sidepanel;
+    }
+}
+
+.img-inner {
+    border-radius: 100%;
+    padding: 0.2rem;
+}
+
+#side-panel {
+    width: 240px;
+    height: 100%;
+    background-color: $bg-sidepanel;
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    #profile {
+        width: 240px;
+        position: fixed;
+        z-index: 10;
+        margin-top: 2.3rem;
+        &.expanded {
+            .profile-inner {
+                padding-bottom: 3rem;
+            }
+            label {
+                opacity: 1;
+                visibility: visible;
+                position: absolute;
+                bottom: 1rem;
+                left: 1rem;
+                color: $text-silver;
+                font-size: 1rem;
+                font-weight: 400;
+            }
+        }
+        .profile-inner {
+            margin: 1rem;
+            @include flex(center);
+            padding: 0.5rem;
+            background-color: $bg-active;
+            border-radius: 1rem;
+            position: relative;
+        }
+        img {
+            width: 4rem;
+            height: 4rem;
+            object-fit: cover;
+            object-position: center;
+        }
+        p {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        i {
+            position: absolute;
+            right: 2rem;
+            color: $button;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease-in-out;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        label {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+    #search {
+        width: 240px;
+        position: fixed;
+        border-bottom: 1px solid $bg-search;
+        // border-top: 1px solid $bg-search;
+        top: 12rem;
+        z-index: 10;
+        .search-inner {
+            margin: 1rem 1rem 1rem 1rem;
+            padding: 0.5rem;
+            overflow: hidden;
+            background-color: $bg-search;
+            border-radius: 0.7rem;
+            color: $text-silver;
+            @include flex(center);
+            input {
+                padding: 0 0.5rem;
+                background-color: transparent;
+                outline: none;
+                width: 100%;
+                border: 0;
+                font-family: "Poppins", sans-serif;
+                color: $button;
+                font-size: 1.2rem;
+                font-weight: 500;
+                transition: all 0.25s ease-in-out;
+                &::-webkit-input-placeholder {
+                    color: $text-silver;
+                }
+                &::-moz-input-placeholder {
+                    color: $text-silver;
+                }
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+            i {
+                font-size: 1rem;
+                padding-left: 0.5rem;
+                color: $button;
+            }
+        }
+    }
+    #title {
+        position: fixed;
+        width: 240px;
+        padding: 0 1rem;
+        top: 20rem;
+        z-index: 10;
+        p {
+            color: $text-silver;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+    }
+    #contacts {
+        width: 240px;
+        position: fixed;
+        z-index: 1;
+        min-height: 450px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        top: 23rem;
+        padding-bottom: 50px;
+        .contact-inner {
+            margin: 0 1rem;
+        }
+        .contact-list {
+            position: absolute;
+            border-top: 1px solid $green;
+            border-bottom: 1px solid $green;
+            li.active {
+                background-color: $bg-active;
+            }
+        }
+        .contact-item {
+            padding: 0.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.25s ease-in-out;
+            cursor: pointer;
+            &:hover {
+                background-color: $bg-contact-hover;
+            }
+            &:first-child {
+                margin-top: 1rem;
+            }
+            @include flex(center);
+            img {
+                width: 4rem;
+                height: 4rem;
+                object-fit: cover;
+                object-position: center;
+            }
+            .contact-info {
+                margin-left: 0.5rem;
+                .name {
+                    color: #fff;
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                }
+                .preview {
+                    margin-top: 0.3rem;
+                    color: $text-silver;
+                    font-size: 1rem;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+    #bottom-bar {
+        background-color: $bg-profile;
+        width: 240px;
+        position: fixed;
+        z-index: 10;
+        bottom: 0;
+        .bottom-bar-inner {
+            margin: 1rem;
+            padding: 0.5rem;
+            overflow: hidden;
+            background-color: $bg-search;
+            border-radius: 0.7rem;
+            color: $text-silver;
+            @include flex(center);
+            input {
+                width: 100%;
+                padding: 0 0.5rem;
+                background-color: transparent;
+                outline: none;
+                border: 0;
+                font-family: "Poppins", sans-serif;
+                color: $button;
+                font-size: 1.2rem;
+                font-weight: 500;
+                transition: all 0.25s ease-in-out;
+                &::-webkit-input-placeholder {
+                    color: $text-silver;
+                }
+                &::-moz-input-placeholder {
+                    color: $text-silver;
+                }
+                &:hover {
+                    opacity: 0.8;
+                }
+            }   
+            button {
+                background-color: transparent;
+                outline: none;
+                border: 0;
+                cursor: pointer;
+                i {
+                    font-size: 1rem;
+                    color: $button;
+                    transition: all 0.25s ease-in-out;
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+    background-color: $bg-content;
+    margin-left: 240px;
+    position: relative;
+    margin-top: 2.3rem;
+    #contact-profile {
+        background-color: $bg-content;
+        padding: 1rem;
+        border-bottom: 1px solid $green;
+        .contact-profile-inner {
+            @include flex(center);
+            padding: 0.5rem;
+            max-width: 100%;
+            position: relative;
+            .name {
+                color: #fff;
+                font-size: 1.3rem;
+                font-weight: 600;
+                position: relative;
+                span {
+                    color: $text-silver;
+                    font-size: 2.5rem;
+                    font-weight: 500;
+                    margin-right: 0.5rem;
+                    display: inline-block;
+                }
+                &:after {
+                    content: "";
+                    width: 0.9rem;
+                    height: 0.9rem;
+                    position: absolute;
+                    bottom: 0.4rem;
+                    right: -1.7rem;
+                    background-color: $green;
+                    border-radius: 100%;
+                }
+            }
+            a {
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: $button;
+                transition: all 0.25s ease-in-out;
+                @include flex(center, center);
+                i {
+                    font-size: 2rem;
+                    color: $button;
+                }
+                p {
+                    font-size: 1rem;
+                    color: $button;
+                    font-weight: 600;
+                }
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+    #messages {
+        position: absolute;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 100%;
+        padding-bottom: 22rem;
+        width: 100%;
+        ul {
+            position: relative;
+            li {
+                &.none-el {
+                    display: none;
+                }
+                &.information {
+                    margin: 1rem 1rem 3rem 1rem;
+                    padding-bottom: 1.5rem;
+                    border-bottom: 1px solid $bg-chat;
+                    img {
+                        height: 7rem;
+                        width: 7rem;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                    h2 {
+                        font-size: 3rem;
+                        font-weight: 700;
+                        margin-top: 1rem;
+                        color: #fff;
+                    }
+                    p {
+                        font-size: 1.3rem;
+                        font-weight: 400;
+                        margin-top: 1.5rem;
+                        color: $text-silver;
+                        span {
+                            font-weight: 600;
+                            color: $button;
+                        }
+                    }
+                }
+                &.sent,
+                &.replies {
+                    margin: 0 1rem 2rem 1rem;
+                    padding: 1rem 10rem 1rem 1rem;
+                    transition: all 0.25s ease-in-out;
+                    border-radius: 1rem;
+                    @include flex(center);
+                    img {
+                        width: 4.5rem;
+                        height: 4.5rem;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                    .details {
+                        width: 100%;
+                        margin-left: 1rem;
+                        .info {
+                            @include flex(center);
+                            .user_name {
+                                font-size: 1.3rem;
+                                font-weight: 400;
+                                color: #fff;
+                            }
+                            .time {
+                                font-size: 1.1rem;
+                                font-weight: 300;
+                                color: $text-silver;
+                                margin-left: 1rem;
+                            }
+                        }
+                        .text {
+                            margin-top: 0.5rem;
+                            font-size: 1.3rem;
+                            font-weight: 300;
+                            color: #fff;
+                            line-height: 2rem;
+                            word-break: break-all;
+                            word-break: break-word;
+                        }
+                    }
+                    &:hover {
+                        background-color: $content-hover;
+                    }
+                }
+            }
+        }
+    }
+    #message-input {
+        background-color: $bg-content;
+        position: absolute;
+        bottom: 0;
+        z-index: 100000;
+        width: 100%;
+        overflow: hidden;
+        padding: 0 1.5rem 4.7rem 1.5rem;
+        .message-input-inner {
+            background-color: $bg-chat;
+            height: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+            @include flex(center);
+            input {
+                transition: all 0.25s ease-in-out;
+                border: 0;
+                outline: none;
+                background-color: transparent;
+                width: 100%;
+                height: 100%;
+                padding: 1.5rem 2rem;
+                color: $button;
+                font-size: 1.4rem;
+                font-weight: 500;
+                &::-webkit-input-placeholder {
+                    color: #727278;
+                }
+                &::-moz-input-placeholder {
+                    color: #727278;
+                }
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+            button {
+                border: 0;
+                outline: none;
+                background-color: transparent;
+                cursor: pointer;
+                transition: all 0.25s ease-in-out;
+                i {
+                    color: $button;
+                    margin-right: 1rem;
+                }
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+    #contact-profile, #messages, #message-input {
+        // display: none;
+    }
+}
