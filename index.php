@@ -26,14 +26,14 @@
 <body>
 <div id="wrapper">
     <div id="author-intro">
-        <div class="logo"><img src="image/logo.png" alt="logo" /></div>
+        <div class="logo"><a href="https://nvanha.github.io/myweb/index.htm" target="_blank"><img src="image/logo.png" alt="logo" /></a></div>
     </div>
     <div id="container">
         <div id="side-panel">
             <div id="profile">
                 <div class="profile-inner">
                     <input type="hidden" id="userid" value="<?php echo $_SESSION['userid'] ?>" />
-                    <img src="image/uploads/avt.jpg" id="profile-img src="./image/user.jpg"" alt="user" class="online" />
+                    <img src="image/uploads/<?php echo $_SESSION['useravt'] ?>" id="profile-img" alt="user" class="online" />
                     <p><?php echo $_SESSION['username']; ?></p>
                     <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
                     <label for="id">User id: <?php echo $_SESSION['userid'] ?></label>
@@ -101,13 +101,17 @@
             <div id="contact-profile">
                 <div class="contact-profile-inner">
                     <input type="hidden" value="-1" id="roomid" />
-                    <p class="name"></p>
+                    <p class="name none-el"></p>
                     <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i><p>SIGN OUT</p></a>
                 </div>
             </div>
             <div id="messages">
                 <input type="hidden" value="-1" id="minchatid" />
                 <input type="hidden" value="-1" id="maxchatid" />
+                <div class="message-bg">
+                    <section></section>
+                    <p>No one's around to play with Wumpus</p>
+                </div>
                 <ul>
                     <li class="information none-el">
                         <img src="image/user3.jpg" alt="avt" class="img-inner" />
@@ -148,7 +152,7 @@
                     </li> -->
                 </ul>
             </div>
-            <div id="message-input">
+            <div id="message-input" class="none-el">
                 <div class="message-input-inner">
                     <input type="text" placeholder="Write your message" />
                     <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>

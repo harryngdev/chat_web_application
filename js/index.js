@@ -7,31 +7,7 @@ $("#profile-img").click(function () {
 
 $(".expand-button").click(function () {
 	$("#profile").toggleClass("expanded");
-	// $("#contacts").toggleClass("expanded");
 });
-
-// $("#status-options ul li").click(function () {
-// 	$("#profile-img").removeClass();
-// 	$("#status-online").removeClass("active");
-// 	$("#status-away").removeClass("active");
-// 	$("#status-busy").removeClass("active");
-// 	$("#status-offline").removeClass("active");
-// 	$(this).addClass("active");
-
-// 	if ($("#status-online").hasClass("active")) {
-// 		$("#profile-img").addClass("online");
-// 	} else if ($("#status-away").hasClass("active")) {
-// 		$("#profile-img").addClass("away");
-// 	} else if ($("#status-busy").hasClass("active")) {
-// 		$("#profile-img").addClass("busy");
-// 	} else if ($("#status-offline").hasClass("active")) {
-// 		$("#profile-img").addClass("offline");
-// 	} else {
-// 		$("#profile-img").removeClass();
-// 	};
-
-// 	$("#status-options").removeClass("active");
-// });
 
 function newMessage() {
 	message = $("#message-input .message-input-inner input").val();
@@ -209,7 +185,83 @@ function selectTop10Friend() {
 			action: "selectTop10Friend"
 		},
 		function (data) {
-			//console.log(data);
+			// console.log(data);
+			data.forEach(row => {
+				mintime = $("#mintime").val();
+				maxtime = $("#maxtime").val();
+				if (mintime != " ") {
+					a = new Date(mintime).getTime();
+					b = new Date(row.USER_ROOM_TIME).getTime();
+					if (a > b) {
+						mintime = row.USER_ROOM_TIME;
+					}
+				} else {
+					mintime = row.USER_ROOM_TIME;
+				}
+				
+
+				if (maxtime != " ") {
+					a = new Date(maxtime).getTime();
+					b = new Date(row.USER_ROOM_TIME).getTime();
+					if (a < b) {
+						maxtime = row.USER_ROOM_TIME;
+					}
+				} else {
+					maxtime = row.USER_ROOM_TIME;
+				}
+
+				room_time = row.USER_ROOM_TIME.split(' ');
+				date = room_time[0].split('-');
+				time = room_time[1].split(':');
+
+				var status = 'offline';
+				var system_date = new Date();
+				
+				function get_value(n) {
+					return String("00" + n).slice(-2);
+				}
+
+				var system_time = `${system_date.getFullYear()}\-${get_value(system_date.getMonth() + 1)}\-${get_value(system_date.getDate())}`;
+				if (system_time === room_time[0]) {
+					if ((parseInt(system_date.getHours()) * 60 + parseInt(system_date.getMinutes())) - (parseInt(time[0]) * 60 + parseInt(time[1])) <= 30) {
+						status = 'online';
+					}
+				}
+
+				$('#mintime').val(mintime);
+				$('#maxtime').val(maxtime);
+
+
+				item = '';
+				item += '<li class="contact-item" onclick=contact_onclick(this)>';
+				item += '<input type="hidden" class="roomid" value="' + row.ROOM_ID + '" />';
+				item += '<input type="hidden" class="user_id" value="' + row.USER_ID + '" />';
+				item += '<input type="hidden" class="user_avt_' + row.USER_ID + '" value="' + row.USER_AVT + '" />';
+				item += '<div class="' + status + '">';
+				item += '<img src="image/uploads/' + row.USER_AVT + '" alt="user" />';
+				item += '</div>';
+				item += '<div class="contact-info">';
+				item += '<p class="name">' + row.USER_NAME + '</p>';
+				item += '<p class="preview">Last action: ' + row.USER_ROOM_TIME + '</p>';
+				item += '</div>';
+				item += '</li>';
+				$("#contacts .contact-inner ul").append(item);
+			});
+		});
+}
+
+$("#search .search-inner input").on("input", searchFriend);
+
+function searchFriend() {
+	$("#contacts .contact-inner ul").html("");
+	s = $("#search .search-inner input").val();
+	$.post("API.php",
+		{
+			action: "searchFriend",
+			s: s
+		},
+		function (data) {
+			// console.log(data);
 			data.forEach(row => {
 				mintime = $("#mintime").val();
 				maxtime = $("#maxtime").val();
@@ -238,7 +290,8 @@ function selectTop10Friend() {
 
 				item = '';
 				item += '<li class="contact-item" onclick=contact_onclick(this)>';
-				item += '<input type="hidden" class="roomid" value="' + row.ROOM_ID + '" />';
+				item += '<input type="hidden" class="user_id" value="' + row.USER_ID + '" />';
+				item += '<input type="hidden" class="user_avt_' + row.USER_ID + '" value="' + row.USER_AVT + '" />';
 				item += '<div class="online">';
 				item += '<img src="image/uploads/' + row.USER_AVT + '" alt="user" />';
 				item += '</div>';
@@ -252,65 +305,11 @@ function selectTop10Friend() {
 		});
 }
 
-$("#search input").on("input", searchFriend);
-
-function searchFriend() {
-	$("#contacts .contact-inner ul").html("");
-	s = $("#search .search-inner input").val();
-	$.post("API.php",
-		{
-			action: "searchFriend",
-			s: s
-		},
-		function (data) {
-			//console.log(data);
-			data.forEach(row => {
-				mintime = $("#mintime").val();
-				maxtime = $("#maxtime").val();
-				if (mintime != " ") {
-					a = new Date(mintime).getTime();
-					b = new Date(row.USER_ROOM_TIME).getTime();
-					if (a > b) {
-						mintime = row.USER_ROOM_TIME;
-					}
-				} else {
-					mintime = row.USER_ROOM_TIME;
-				}
-
-				if (maxtime != " ") {
-					a = new Date(maxtime).getTime();
-					b = new Date(row.USER_ROOM_TIME).getTime();
-					if (a < b) {
-						maxtime = row.USER_ROOM_TIME;
-					}
-				} else {
-					maxtime = row.USER_ROOM_TIME;
-				}
-
-				$('#mintime').val(mintime);
-				$('#maxtime').val(maxtime);
-
-				item = '';
-				item += '<li class="contact-item" onclick=contact_onclick(this)>';
-				item += '<input type="hidden" class="roomid" value="' + row.ROOM_ID + '" />';
-				item += '<div class="online">';
-				item += '<img src="image/user.jpg" alt="user" />';
-				item += '</div>';
-				item += '<div class="contact-info">';
-				item += '<p class="name">' + row.USER_NAME + '</p>';
-				item += '<p class="preview">Last action: ' + row.USER_ROOM_TIME + '</p>';
-				item += '</div>';
-				item += '</li>';
-				$("#contacts .contact-inner ul").append(item);
-			});
-		});
-}
-
-function selectTop10Chat(name_user) {
+function selectTop10Chat(name_user, avt_user) {
 	$("#content #messages ul").html("");
 	item = '';
 	item += '<li class="information">';
-	item += '<img src="image/user.jpg" alt="user" class="img-inner" />';
+	item += '<img src="image/uploads/' + avt_user + '" class="img-inner" />';
 	item += '<div class="description">';
 	item += '<h2>' + name_user + '</h2>';
 	item += '<p>This is the beginning of your direct message history with <span>@' + name_user + '</p>';
@@ -382,14 +381,19 @@ function getSession() {
 
 function contact_onclick(elmnt) {
 	roomid = $(elmnt).find(".roomid").val();
+	user_id = $(elmnt).find(".user_id").val();
+	user_avt = $(elmnt).find(".user_avt_" + user_id).val();
 	contactname = $(elmnt).find(".name").html();
 	contactname_item = '<span>@</span>' + contactname;
 	$("#roomid").val(roomid);
 	$("#contacts .contact-inner ul").children().removeClass("active");
 	$(elmnt).addClass("active");
+	$("#content #contact-profile .contact-profile-inner p.name").removeClass("none-el");
 	$("#content #contact-profile .contact-profile-inner p.name").html(contactname_item);
+	$("#content #messages .message-bg").addClass("none-el");
 	$("#content #messages ul .messages-inner li.information").removeClass("none-el");
-	selectTop10Chat(contactname);
+	$("#content #message-input").removeClass("none-el");
+	selectTop10Chat(contactname, user_avt);
 	chatInterval = setInterval(updateChat, 1000);
 }
 

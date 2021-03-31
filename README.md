@@ -9,10 +9,10 @@
 ## Installation
 Set config in `config.php` :
 ```php
-$server = "";
-$db = "";
-$user = "";
-$pass = "";
+$servername = "";
+$username = "";
+$password = "";
+$databasename = "";
 ```
 ## Path
 Index:

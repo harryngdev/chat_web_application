@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2021 at 06:58 AM
+-- Generation Time: Mar 31, 2021 at 01:09 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -149,6 +149,7 @@ BEGIN
         `user_room`.`ROOM_ID`,
         `user_room`.`USER_ID`,
         `user`.`USER_NAME`,
+        `user`.`USER_AVT`,
         `user_room`.`USER_ROOM_STATUS`,
         `user_room`.`USER_ROOM_TIME`
     FROM
@@ -303,14 +304,6 @@ CREATE TABLE `chat` (
   `CHAT_TIME` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `chat`
---
-
-INSERT INTO `chat` (`CHAT_ID`, `ROOM_ID`, `USER_ID`, `CHAT_CONTENT`, `CHAT_TIME`) VALUES
-(61, 18, 9, 'Just setting up my app', '2021-03-30 04:54:28'),
-(62, 18, 10, 'Hello', '2021-03-30 04:54:33');
-
 -- --------------------------------------------------------
 
 --
@@ -324,17 +317,6 @@ CREATE TABLE `person` (
   `PERSON_FACE` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`PERSON_ID`, `PERSON_FULLNAME`, `PERSON_EMAIL`, `PERSON_FACE`) VALUES
-(11, 'Ha', 'ha@gmail.com', 'Ha'),
-(12, 'Thao', 'thao@gmail.com', 'Thao'),
-(13, 'Quy', 'quy@gmail.com', 'Quy'),
-(14, 'Khanh', 'khanh@gmail.com', 'Khanh'),
-(15, 'Nghia', 'nghia@gmail.com', 'Nghia');
-
 -- --------------------------------------------------------
 
 --
@@ -344,16 +326,6 @@ INSERT INTO `person` (`PERSON_ID`, `PERSON_FULLNAME`, `PERSON_EMAIL`, `PERSON_FA
 CREATE TABLE `room` (
   `ROOM_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `room`
---
-
-INSERT INTO `room` (`ROOM_ID`) VALUES
-(18),
-(19),
-(20),
-(21);
 
 -- --------------------------------------------------------
 
@@ -370,17 +342,6 @@ CREATE TABLE `user` (
   `USER_LASTACTION` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`USER_ID`, `USER_NAME`, `USER_PASSWORD`, `USER_AVT`, `PERSON_ID`, `USER_LASTACTION`) VALUES
-(9, 'Ha', '$2y$10$BTAw1V9MBT7eKmy7JYzVqe6TOwOnqnegdeUaW1gwOQjJnSSFe9AWy', 'user2.jpg', 11, '2021-03-30 04:16:42'),
-(10, 'Thao', '$2y$10$iPxKw4HYUIZ3/QrXHiR0SuriKyGglSNzXJ6ZpiEbHGC0qdQdcQppO', 'user3.jpg', 12, '2021-03-30 04:22:31'),
-(11, 'Quy', '$2y$10$lnWqgehYYmJd4xW1gTjJ9OhxV8Md86u4gywcfhi0mJ4oFsFuPIqe2', 'user5.jpg', 13, '2021-03-30 04:22:48'),
-(12, 'Khanh', '$2y$10$QeW.il9L9Y6vPz8z.EGiheA9zW5C86E0JZZTbtkQx0Lh.f2o/lSFC', 'user4.jpg', 14, '2021-03-30 04:23:02'),
-(13, 'Nghia', '$2y$10$50nFZWdIQAwTuZeXlHl4POlT7IOTTBnJUw0STUFRj1FoXgq2SGYgK', 'user1.jpg', 15, '2021-03-30 04:23:18');
-
 -- --------------------------------------------------------
 
 --
@@ -393,20 +354,6 @@ CREATE TABLE `user_room` (
   `USER_ROOM_STATUS` int(11) DEFAULT NULL,
   `USER_ROOM_TIME` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user_room`
---
-
-INSERT INTO `user_room` (`USER_ID`, `ROOM_ID`, `USER_ROOM_STATUS`, `USER_ROOM_TIME`) VALUES
-(9, 18, 0, '2021-03-30 04:54:33'),
-(9, 19, 0, '2021-03-30 04:25:25'),
-(9, 20, 0, '2021-03-30 04:25:27'),
-(9, 21, 0, '2021-03-30 04:25:29'),
-(10, 18, 1, '2021-03-30 04:54:33'),
-(11, 19, 1, '2021-03-30 04:25:25'),
-(12, 20, 1, '2021-03-30 04:25:27'),
-(13, 21, 1, '2021-03-30 04:25:29');
 
 --
 -- Indexes for dumped tables
@@ -454,7 +401,7 @@ ALTER TABLE `user_room`
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `CHAT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `CHAT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -466,7 +413,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `ROOM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ROOM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `user`

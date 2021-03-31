@@ -492,6 +492,10 @@ body {
   opacity: 0.8;
 }
 
+.none-el {
+  display: none;
+}
+
 #content {
   width: 100%;
   height: 100%;
@@ -575,6 +579,7 @@ body {
 #content #contact-profile .contact-profile-inner a i {
   font-size: 2rem;
   color: #b9bbbe;
+  margin-right: 0.5rem;
 }
 
 #content #contact-profile .contact-profile-inner a p {
@@ -596,12 +601,39 @@ body {
   width: 100%;
 }
 
-#content #messages ul {
+#content #messages .message-bg {
+  width: 100%;
+  height: 100%;
   position: relative;
 }
 
-#content #messages ul li.none-el {
-  display: none;
+#content #messages .message-bg section {
+  height: 40%;
+  width: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-image: url(../../image/bg4.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+#content #messages .message-bg p {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -75%);
+          transform: translate(-50%, -75%);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #8e9297;
+}
+
+#content #messages ul {
+  position: relative;
 }
 
 #content #messages ul li.information {
